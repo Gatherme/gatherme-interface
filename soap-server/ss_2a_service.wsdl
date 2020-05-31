@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<wsdl:definitions name="HelloService" targetNamespace="http://www.examples.com/wsdl/HelloService.wsdl" 
+<wsdl:definitions targetNamespace="http://www.examples.com/wsdl/MyService.wsdl" 
   xmlns:s="http://www.w3.org/2001/XMLSchema" 
   xmlns:tns="http://www.examples.com/wsdl/MyService.wsdl" 
   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
@@ -7,12 +7,12 @@
 
   <wsdl:types>
     <s:schema elementFormDefault="qualified" targetNamespace="http://www.examples.com/wsdl/MyService.wsdl">
-      <s:element name="GetLikesRequest">
+      <s:element name="getLikesRequest">
         <s:sequence>
             <s:element name = "idUser" type = "xsd:string"/>
           </s:sequence>
       </s:element>
-      <s:element name="GetLikesResponse">
+      <s:element name="getLikesResponse">
         <s:complexType>
           <s:sequence>
             <s:element maxOccurs="unbounded" name="likes"/>
@@ -22,18 +22,18 @@
     </s:schema>
   </wsdl:types>
 
-  <wsdl:message name="GetLikesSoapIn">
-    <wsdl:part name="parameters" element="tns:GetLikesRequest"/>
+  <wsdl:message name="getLikesSoapIn">
+    <wsdl:part name="parameters" element="tns:getLikesRequest"/>
   </wsdl:message>
-  <wsdl:message name="GetLikesSoapOut">
-    <wsdl:part name="parameters" element="tns:GetLikesResponse"/>
+  <wsdl:message name="getLikesSoapOut">
+    <wsdl:part name="parameters" element="tns:getLikesResponse"/>
   </wsdl:message>
 
   <wsdl:portType name="ss_2a_Port">
     <!-- The operation name must be the same as the one specified in the service object -->
     <wsdl:operation name="getLikes">
-      <wsdl:input message="tns:GetLikesSoapIn"/>
-      <wsdl:output message="tns:GetLikesSoapOut"/>
+      <wsdl:input message="tns:getLikesSoapIn"/>
+      <wsdl:output message="tns:getLikesSoapOut"/>
     </wsdl:operation>
   </wsdl:portType>
 
