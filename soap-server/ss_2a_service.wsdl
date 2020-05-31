@@ -1,0 +1,42 @@
+<definitions name="HelloService" targetNamespace="http://www.examples.com/wsdl/HelloService.wsdl" 
+  xmlns="http://schemas.xmlsoap.org/wsdl/" 
+  xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
+  xmlns:tns="http://www.examples.com/wsdl/HelloService.wsdl" 
+  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+
+  <message name="getLikesRequest">
+    <part name="weight" type="xsd:float"/>
+    <part name="height" type="xsd:float"/>
+  </message>
+
+  <message name="getLikesResponse">
+    <part name="bmi" type="xsd:float"/>
+  </message>
+
+  <portType name="Hello_PortType">
+    <operation name="getLikes">
+      <input message="tns:getLikesRequest"/>
+      <output message="tns:getLikesResponse"/>
+    </operation>
+  </portType>
+
+  <binding name="Hello_Binding" type="tns:Hello_PortType">
+    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
+    <operation name="getLikes">
+      <soap:operation soapAction="getLikes"/>
+      <input>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:examples:helloservice" use="encoded"/>
+      </input>
+      <output>
+        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:examples:helloservice" use="encoded"/>
+      </output>
+    </operation>
+  </binding>
+
+  <service name="getLikes">
+    <documentation>WSDL File for HelloService</documentation>
+    <port binding="tns:Hello_Binding" name="getLikes_Port">
+      <soap:address location="http://localhost:3030/getLikes/" />
+    </port>
+  </service>
+</definitions>
