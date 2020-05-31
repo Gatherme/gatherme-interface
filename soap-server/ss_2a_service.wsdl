@@ -1,42 +1,59 @@
-<definitions name="HelloService" targetNamespace="http://www.examples.com/wsdl/HelloService.wsdl" 
-  xmlns="http://schemas.xmlsoap.org/wsdl/" 
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions name="HelloService" targetNamespace="http://www.examples.com/wsdl/HelloService.wsdl" 
+  xmlns:s="http://www.w3.org/2001/XMLSchema" 
+  xmlns:tns="http://www.examples.com/wsdl/MyService.wsdl" 
   xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" 
-  xmlns:tns="http://www.examples.com/wsdl/HelloService.wsdl" 
-  xmlns:xsd="http://www.w3.org/2001/XMLSchema">
+  xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
 
-  <message name="getLikesRequest">
-    <part name="weight" type="xsd:float"/>
-    <part name="height" type="xsd:float"/>
-  </message>
+  <wsdl:types>
+    <s:schema elementFormDefault="qualified" targetNamespace="http://www.examples.com/wsdl/MyService.wsdl">
+      <s:element name="GetLikesRequest">
+        <s:sequence>
+            <s:element name = "idUser" type = "xsd:string"/>
+          </s:sequence>
+      </s:element>
+      <s:element name="GetLikesResponse">
+        <s:complexType>
+          <s:sequence>
+            <s:element maxOccurs="unbounded" name="likes"/>
+          </s:sequence>
+        </s:complexType>
+      </s:element>
+    </s:schema>
+  </wsdl:types>
 
-  <message name="getLikesResponse">
-    <part name="bmi" type="xsd:float"/>
-  </message>
+  <wsdl:message name="GetLikesSoapIn">
+    <wsdl:part name="parameters" element="tns:GetLikesRequest"/>
+  </wsdl:message>
+  <wsdl:message name="GetLikesSoapOut">
+    <wsdl:part name="parameters" element="tns:GetLikesResponse"/>
+  </wsdl:message>
 
-  <portType name="Hello_PortType">
-    <operation name="getLikes">
-      <input message="tns:getLikesRequest"/>
-      <output message="tns:getLikesResponse"/>
-    </operation>
-  </portType>
+  <wsdl:portType name="ss_2a_Port">
+    <!-- The operation name must be the same as the one specified in the service object -->
+    <wsdl:operation name="getLikes">
+      <wsdl:input message="tns:GetLikesSoapIn"/>
+      <wsdl:output message="tns:GetLikesSoapOut"/>
+    </wsdl:operation>
+  </wsdl:portType>
 
-  <binding name="Hello_Binding" type="tns:Hello_PortType">
-    <soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http"/>
-    <operation name="getLikes">
-      <soap:operation soapAction="getLikes"/>
-      <input>
-        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:examples:helloservice" use="encoded"/>
-      </input>
-      <output>
-        <soap:body encodingStyle="http://schemas.xmlsoap.org/soap/encoding/" namespace="urn:examples:helloservice" use="encoded"/>
-      </output>
-    </operation>
-  </binding>
+  <wsdl:binding name="ss_2a_Binding" type="tns:ss_2a_Port">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http"/>
+    <wsdl:operation name="getLikes">
+      <soap:operation soapAction="getLikes" style="document"/>
+      <wsdl:input>
+        <soap:body use="literal"/>
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal"/>
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
 
-  <service name="getLikes">
-    <documentation>WSDL File for HelloService</documentation>
-    <port binding="tns:Hello_Binding" name="getLikes_Port">
-      <soap:address location="http://localhost:3030/getLikes/" />
-    </port>
-  </service>
-</definitions>
+  <wsdl:service name="ss_2a">
+    <wsdl:port name="functions" binding="tns:ss_2a_Binding">
+      <soap:address location="http://localhost:3030/ss_2a"/>
+    </wsdl:port>
+  </wsdl:service>
+
+</wsdl:definitions>

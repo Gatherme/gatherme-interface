@@ -1,6 +1,8 @@
 function getLikes(args){
-    console.log(args.username)
-    return {likes: ["uno", "dos"]}
+    let idUser = args
+    console.log(idUser)
+    let  likes = ["uno", "dos"]
+    return {likes: likes}
 
 }
 
