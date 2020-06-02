@@ -1,26 +1,25 @@
 const soap = require('soap');
 
 let host = 'localhost';
-let port = 3030;
-let path = ''
+let port = 8001;
+let path = 'getUserById'
 
 let url =`http://${host}:${port}/${path}?wsdl`
 
-async function nameFunction(id, type){
-    let args ={id: id, type: type};
+async function getUserById(id){
+    let args ={id: id};
 
     const client = await soap.createClientAsync(url);
 
-    let nameFunctionSoap = (args) => {
+    let getUserByIdSoap = (args) => {
         return new Promise(resolve => {
-            client.nameFunction(args, (err, result) => { resolve(result)});
+            client.getUserById(args, (err, result) => { resolve(result)});
         });
     }
 
-    let result =  await nameFunctionSoap(args);
-
+    let result =  await getUserByIdSoap(args);
     return result;
 
 }
 
-module.exports = {nameFunction}
+module.exports = {getUserById}
