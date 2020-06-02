@@ -1,24 +1,37 @@
+'use strict'
 const soap = require('soap');
 
-let host = 'localhost';
+let host = '172.17.0.1'
 let port = 8001;
 let path = 'getUserById'
 
 let url =`http://${host}:${port}/${path}?wsdl`
 
-async function getUserById(id){
-    let args ={id: id};
+async function getUserById(req,res){
 
-    const client = await soap.createClientAsync(url);
+    let args ={
+        id:req.body.id
+    };
 
-    let getUserByIdSoap = (args) => {
-        return new Promise(resolve => {
-            client.getUserById(args, (err, result) => { resolve(result)});
-        });
-    }
+    console.log(`URL : ${url}`)
 
-    let result =  await getUserByIdSoap(args);
-    return result;
+    soap.createClient(url,(err1,client)=>{
+        if(err1){
+            console.log(`CONNECTION ERROR : ${err1}`)
+            return res.status(500).send({"CONNECTION ERROR": err1})
+        }else{
+
+            client.getUserById(args,(err2,result)=>{
+                if(err2){
+                    console.log(`FUNCTION ERROR : ${err2}`)
+                    return res.status(500).send({"FUNCTION ERROR": err2})
+                }else{
+                    console.log(`RESULT : ${result}`)
+                    return res.status(200).send({RESULT: result})
+                }
+            })
+        }
+    })
 
 }
 

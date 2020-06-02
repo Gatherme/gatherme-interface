@@ -1,0 +1,11 @@
+version: '3'
+services:
+    gatherme-interface:
+        container_name: gatherme-interface
+        build: .
+        restart: always
+        ports:
+            - '3030:3030'
+            - '2525:2525'
+
+

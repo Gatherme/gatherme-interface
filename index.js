@@ -16,7 +16,7 @@ const xml = fs.readFileSync('./soap-server/ss_2a_service.wsdl', 'utf8');
 
 soapServer.listen(config.soap_PORT, function(){
     soap.listen(soapServer, '/ss_2a', ss_2a, xml, function(){
-        console.log("servidor SOAP corriendo")
+        console.log(`SOAP Corriendo en http://localhost:${config.soap_PORT}`)
     })
 })
 
